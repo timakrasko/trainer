@@ -1,0 +1,52 @@
+<div class="jumbotron page1">
+    <h1>{{ELEMENTSTEST_TITLE1}}</h1>
+    <p>Перетягніть правильні ключові слова у код:</p>
+
+    <style>
+        .s1-code-block { background: #282c34; color: #abb2bf; padding: 20px; border-radius: 6px; font-family: monospace; margin-bottom: 20px; line-height: 2.5; }
+        .s1-drop-zone { display: inline-block; width: 60px; height: 30px; border: 2px dashed #61afef; border-radius: 4px; vertical-align: middle; text-align: center; color: white; background: rgba(97, 175, 239, 0.1); }
+        .s1-draggable-container { display: flex; gap: 15px; justify-content: center; padding: 10px; background: #e5e5e5; border-radius: 6px; }
+        .s1-draggable { background: #98c379; color: #282c34; padding: 8px 20px; border-radius: 4px; font-weight: bold; cursor: grab; }
+        .correct { background: #4caf50 !important; border-color: #4caf50; }
+        .wrong { background: #e06c75 !important; border-color: #e06c75; }
+        /* Стиль для кнопки перевірки */
+        button.check { margin-top: 20px; background: #2196F3; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-size: 16px; cursor: pointer; }
+    </style>
+
+    <div class="s1-code-block">
+        // 1. Оголошення функції<br>
+        <span class="s1-drop-zone" data-answer="fun" ondrop="drop1(event)" ondragover="allowDrop1(event)"></span> main() {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;// 2. Константа<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="s1-drop-zone" data-answer="val" ondrop="drop1(event)" ondragover="allowDrop1(event)"></span> appName = "MyApp"<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;// 3. Змінна<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="s1-drop-zone" data-answer="var" ondrop="drop1(event)" ondragover="allowDrop1(event)"></span> count = 0<br>
+        }
+    </div>
+
+    <div class="s1-draggable-container">
+        <div class="s1-draggable" draggable="true" ondragstart="drag1(event)" data-val="val">val</div>
+        <div class="s1-draggable" draggable="true" ondragstart="drag1(event)" data-val="var">var</div>
+        <div class="s1-draggable" draggable="true" ondragstart="drag1(event)" data-val="fun">fun</div>
+    </div>
+
+    <button class="check">Перевірити відповідь</button>
+
+    <script>
+        function allowDrop1(ev) { ev.preventDefault(); }
+        function drag1(ev) { ev.dataTransfer.setData("text", ev.target.dataset.val); }
+        function drop1(ev) {
+            ev.preventDefault();
+            var data = ev.dataTransfer.getData("text");
+            var answer = ev.target.dataset.answer;
+            ev.target.innerText = data;
+            // Додаємо клас .correct або .wrong, який потім зчитає JS-файл
+            if(data === answer) {
+                ev.target.classList.add("correct");
+                ev.target.classList.remove("wrong");
+            } else {
+                ev.target.classList.add("wrong");
+                ev.target.classList.remove("correct");
+            }
+        }
+    </script>
+</div>

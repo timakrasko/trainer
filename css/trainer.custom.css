@@ -1,0 +1,24 @@
+.navbar-brand {
+	height: auto !important;
+}
+
+.jumbotron.page1 h4 {
+    line-height: 1.5;
+}
+
+.important {
+    color: red;
+}
+
+.centered {
+    text-align: center;
+}
+
+img {
+    max-width: 600px;
+}
+
+.divider {
+    margin: 2rem 0;
+    border-bottom: 2px solid #ccc;
+}
