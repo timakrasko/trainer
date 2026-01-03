@@ -1,52 +1,224 @@
 <div class="jumbotron page1">
     <h1>{{ELEMENTSTEST_TITLE1}}</h1>
-    <p>Перетягніть правильні ключові слова у код:</p>
+    <h4>Заповніть пропуски у коді Kotlin правильними ключовими словами:</h4>
+    <p class="text-muted centered">Завдання: Вивчіть код та вставте правильні слова замість підкреслень</p>
 
     <style>
-        .s1-code-block { background: #282c34; color: #abb2bf; padding: 20px; border-radius: 6px; font-family: monospace; margin-bottom: 20px; line-height: 2.5; }
-        .s1-drop-zone { display: inline-block; width: 60px; height: 30px; border: 2px dashed #61afef; border-radius: 4px; vertical-align: middle; text-align: center; color: white; background: rgba(97, 175, 239, 0.1); }
-        .s1-draggable-container { display: flex; gap: 15px; justify-content: center; padding: 10px; background: #e5e5e5; border-radius: 6px; }
-        .s1-draggable { background: #98c379; color: #282c34; padding: 8px 20px; border-radius: 4px; font-weight: bold; cursor: grab; }
-        .correct { background: #4caf50 !important; border-color: #4caf50; }
-        .wrong { background: #e06c75 !important; border-color: #e06c75; }
-        /* Стиль для кнопки перевірки */
-        button.check { margin-top: 20px; background: #2196F3; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-size: 16px; cursor: pointer; }
+        .s1-code-container {
+            background: #1e1e1e;
+            border-radius: 10px;
+            padding: 30px;
+            margin: 30px auto;
+            max-width: 800px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            line-height: 2.2;
+        }
+
+        .s1-line {
+            margin: 8px 0;
+            color: #d4d4d4;
+        }
+
+        .s1-comment {
+            color: #6a9955;
+            font-style: italic;
+        }
+
+        .s1-keyword {
+            color: #569cd6;
+            font-weight: bold;
+        }
+
+        .s1-string {
+            color: #ce9178;
+        }
+
+        .s1-function {
+            color: #dcdcaa;
+        }
+
+        .s1-number {
+            color: #b5cea8;
+        }
+
+        .s1-input-wrapper {
+            display: inline-block;
+            position: relative;
+        }
+
+        .s1-code-input {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid #569cd6;
+            border-radius: 4px;
+            color: #ffffff;
+            padding: 4px 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            width: 120px;
+            transition: all 0.3s ease;
+        }
+
+        .s1-code-input:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.15);
+            border-color: #4ec9b0;
+            box-shadow: 0 0 10px rgba(78, 201, 176, 0.5);
+        }
+
+        .s1-code-input.input-correct {
+            border-color: #4caf50;
+            background: rgba(76, 175, 80, 0.2);
+        }
+
+        .s1-code-input.input-wrong {
+            border-color: #f44336;
+            background: rgba(244, 67, 54, 0.2);
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .hint-box {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 8px;
+        }
+
+        .hint-box h5 {
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .hint-box ul {
+            margin: 10px 0 0 20px;
+            line-height: 1.8;
+        }
+
+        .hint-box code {
+            background: #f5f5f5;
+            padding: 2px 8px;
+            border-radius: 4px;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        button.check {
+            margin-top: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        button.check:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+
+        button.check:active {
+            transform: translateY(-1px);
+        }
+
+        .label-number {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            width: 24px;
+            height: 24px;
+            line-height: 24px;
+            text-align: center;
+            border-radius: 50%;
+            font-size: 12px;
+            font-weight: bold;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
     </style>
 
-    <div class="s1-code-block">
-        // 1. Оголошення функції<br>
-        <span class="s1-drop-zone" data-answer="fun" ondrop="drop1(event)" ondragover="allowDrop1(event)"></span> main() {<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;// 2. Константа<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;<span class="s1-drop-zone" data-answer="val" ondrop="drop1(event)" ondragover="allowDrop1(event)"></span> appName = "MyApp"<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;// 3. Змінна<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;<span class="s1-drop-zone" data-answer="var" ondrop="drop1(event)" ondragover="allowDrop1(event)"></span> count = 0<br>
-        }
+    <div class="hint-box">
+        <h5>💡 Підказки для виконання завдання:</h5>
+        <ul>
+            <li><code>fun</code> - ключове слово для оголошення функції в Kotlin</li>
+            <li><code>val</code> - оголошує незмінну змінну (константу)</li>
+            <li><code>var</code> - оголошує змінну, значення якої можна змінювати</li>
+            <li><code>println</code> - функція для виведення тексту на екран</li>
+            <li><code>Int</code> - тип даних для цілих чисел</li>
+        </ul>
     </div>
 
-    <div class="s1-draggable-container">
-        <div class="s1-draggable" draggable="true" ondragstart="drag1(event)" data-val="val">val</div>
-        <div class="s1-draggable" draggable="true" ondragstart="drag1(event)" data-val="var">var</div>
-        <div class="s1-draggable" draggable="true" ondragstart="drag1(event)" data-val="fun">fun</div>
-    </div>
+    <div class="s1-code-container">
+        <div class="s1-line">
+            <span class="s1-comment">// 1. Оголошення функції main - точка входу в програму</span>
+        </div>
+        <div class="s1-line">
+            <span class="label-number">1</span>
+            {{{STEP1_INPUT1}}} <span class="s1-function">main</span>() {
+        </div>
+        <div class="s1-line">&nbsp;</div>
 
-    <button class="check">Перевірити відповідь</button>
+        <div class="s1-line">
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="s1-comment">// 2. Константа - незмінне значення</span>
+        </div>
+        <div class="s1-line">
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="label-number">2</span>
+            {{{STEP1_INPUT2}}} appName = <span class="s1-string">"Мій Android додаток"</span>
+        </div>
+        <div class="s1-line">&nbsp;</div>
 
-    <script>
-        function allowDrop1(ev) { ev.preventDefault(); }
-        function drag1(ev) { ev.dataTransfer.setData("text", ev.target.dataset.val); }
-        function drop1(ev) {
-            ev.preventDefault();
-            var data = ev.dataTransfer.getData("text");
-            var answer = ev.target.dataset.answer;
-            ev.target.innerText = data;
-            // Додаємо клас .correct або .wrong, який потім зчитає JS-файл
-            if(data === answer) {
-                ev.target.classList.add("correct");
-                ev.target.classList.remove("wrong");
-            } else {
-                ev.target.classList.add("wrong");
-                ev.target.classList.remove("correct");
+        <div class="s1-line">
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="s1-comment">// 3. Змінна - значення можна змінити</span>
+        </div>
+        <div class="s1-line">
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="label-number">3</span>
+            {{{STEP1_INPUT3}}} userCount = <span class="s1-number">0</span>
+        </div>
+        <div class="s1-line">
+            &nbsp;&nbsp;&nbsp;&nbsp;userCount = <span class="s1-number">10</span> <span class="s1-comment">// Змінюємо значення</span>
+        </div>
+        <div class="s1-line">&nbsp;</div>
+
+        <div class="s1-line">
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="s1-comment">// 4. Виведення тексту на екран</span>
+        </div>
+        <div class="s1-line">
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="label-number">4</span>
+            {{{STEP1_INPUT4}}}(<span class="s1-string">"Привіт, $appName!"</span>)
+        </div>
+        <div class="s1-line">&nbsp;</div>
+
+        <div class="s1-line">
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="s1-comment">// 5. Оголошення змінної з явним типом</span>
+        </div>
+        <div class="s1-line">
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="s1-keyword">val</span> score: <span class="label-number">5</span>{{{STEP1_INPUT5}}} = <span class="s1-number">100</span>
+        </div>
+        <div class="s1-line">
             }
-        }
-    </script>
+        </div>
+    </div>
+
+    <div class="text-center">
+        <button class="check">✓ Перевірити відповіді</button>
+    </div>
+
+    <div style="background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin: 20px 0; border-radius: 4px;">
+        <p style="margin: 0; color: #856404;">
+            <strong>⚠️ Важливо:</strong> Введіть відповіді маленькими літерами. Після перевірки правильні відповіді підсвітяться зеленим, а неправильні - червоним.
+        </p>
+    </div>
 </div>

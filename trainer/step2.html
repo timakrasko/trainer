@@ -4,29 +4,18 @@
 
     <style>
         .s2-list { list-style: none; padding: 0; max-width: 600px; }
-        .s2-item { background: #f4f6f8; border: 1px solid #d1d9e0; padding: 10px; margin-bottom: 8px; display: flex; justify-content: space-between; font-family: monospace; }
-        .s2-btn { background: #0366d6; color: white; border: none; width: 30px; cursor: pointer; margin-left: 5px; }
-        button.check { margin-top: 20px; background: #2196F3; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-size: 16px; cursor: pointer; }
+        .s2-item { background: #f4f6f8; border: 1px solid #d1d9e0; padding: 10px; margin-bottom: 8px; display: flex; justify-content: space-between; font-family: monospace; transition: all 0.3s; }
+        .s2-btn { background: #0366d6; color: white; border: none; width: 30px; cursor: pointer; margin-left: 5px; border-radius: 3px; }
     </style>
 
     <ul id="codeList2" class="s2-list">
-        <li class="s2-item" data-id="3"><span>&nbsp;&nbsp;&nbsp;&nbsp;Text("Start")</span> <div><button class="s2-btn" onclick="mvUp(this)">▲</button><button class="s2-btn" onclick="mvDn(this)">▼</button></div></li>
-        <li class="s2-item" data-id="1"><span>Column {</span> <div><button class="s2-btn" onclick="mvUp(this)">▲</button><button class="s2-btn" onclick="mvDn(this)">▼</button></div></li>
-        <li class="s2-item" data-id="4"><span>&nbsp;&nbsp;}</span> <div><button class="s2-btn" onclick="mvUp(this)">▲</button><button class="s2-btn" onclick="mvDn(this)">▼</button></div></li>
-        <li class="s2-item" data-id="5"><span>}</span> <div><button class="s2-btn" onclick="mvUp(this)">▲</button><button class="s2-btn" onclick="mvDn(this)">▼</button></div></li>
-        <li class="s2-item" data-id="2"><span>&nbsp;&nbsp;Button(onClick = {}) {</span> <div><button class="s2-btn" onclick="mvUp(this)">▲</button><button class="s2-btn" onclick="mvDn(this)">▼</button></div></li>
+        <li class="s2-item" data-id="3"><span>&nbsp;&nbsp;&nbsp;&nbsp;Text("Start")</span> <div><button class="s2-btn">▲</button><button class="s2-btn">▼</button></div></li>
+        <li class="s2-item" data-id="1"><span>Column {</span> <div><button class="s2-btn">▲</button><button class="s2-btn">▼</button></div></li>
+        <li class="s2-item" data-id="4"><span>&nbsp;&nbsp;}</span> <div><button class="s2-btn">▲</button><button class="s2-btn">▼</button></div></li>
+        <li class="s2-item" data-id="5"><span>}</span> <div><button class="s2-btn">▲</button><button class="s2-btn">▼</button></div></li>
+        <li class="s2-item" data-id="2"><span>&nbsp;&nbsp;Button(onClick = {}) {</span> <div><button class="s2-btn">▲</button><button class="s2-btn">▼</button></div></li>
     </ul>
 
-    <button class="check">Перевірити відповідь</button>
-
-    <script>
-        function mvUp(btn) {
-            let i = btn.closest('li');
-            if (i.previousElementSibling) i.parentNode.insertBefore(i, i.previousElementSibling);
-        }
-        function mvDn(btn) {
-            let i = btn.closest('li');
-            if (i.nextElementSibling) i.parentNode.insertBefore(i.nextElementSibling, i);
-        }
-    </script>
+    <br>
+    <button class="check btn btn-primary">Перевірити</button>
 </div>

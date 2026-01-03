@@ -6,17 +6,17 @@
     },
     {
         "filename"      :   "step1",
-        "score"         :   0,
+        "score"         :   30,
         "hasScript"     :   true
     },
     {
         "filename"      :   "step2",
-        "score"         :   80,
+        "score"         :   30,
         "hasScript"     :   true
     },
     {
         "filename"      :   "step3",
-        "score"         :   20,
+        "score"         :   40,
         "hasScript"     :   true
     },
     {

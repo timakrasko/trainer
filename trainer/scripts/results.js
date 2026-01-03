@@ -5,7 +5,7 @@ var results = function () {
     };
 
     this.postDispatch = function () {
-        /*var g = new GoogleCharts(); // Making a call to google charts api to build a column chart
+        var g = new GoogleCharts(); // Making a call to google charts api to build a column chart
 
         var scores = Rotator.getAllStepScores();
         var userScores = Scorer.getUserStepScores();
@@ -30,7 +30,6 @@ var results = function () {
         g.setData(data);
         g.setOptions(options);
         g.doQuery($('div#gc'));
-        */
 
         if (PRODUCTION)
             Service.pushResults();

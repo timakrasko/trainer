@@ -1,45 +1,363 @@
 <div class="jumbotron page3">
     <h1>{{ELEMENTSTEST_TITLE3}}</h1>
-    <br>
-    <h4>
-        <strong>1. {{ELEMENTSTEST_P3_Q1}}</strong>
-    </h4>
-    <h4>
-        {{{Q1_RADIOS}}}
-    </h4>
-    <br>
+    <h4>Розставте методи життєвого циклу Activity у правильному порядку:</h4>
+    <p class="text-muted centered">Завдання: Перетягніть методи зліва у правильні місця справа</p>
 
-    <h4>
-        <strong>2. {{ELEMENTSTEST_P3_Q2}}</strong>
-    </h4>
-    <h4>
-        {{{Q2_RADIOS}}}
-    </h4>
-    <br>
+    <style>
+        .lifecycle-container {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
 
-    <h4>
-        <strong>3. {{ELEMENTSTEST_P3_Q3}}</strong>
-    </h4>
-    <h4>
-        {{{Q3_RADIOS}}}
-    </h4>
-    <br>
+        .methods-pool {
+            background: #f5f5f5;
+            border-radius: 10px;
+            padding: 25px;
+            min-width: 280px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
 
-    <h4>
-        <strong>4. {{ELEMENTSTEST_P3_Q4}}</strong>
-    </h4>
-    <h4>
-        {{{Q4_RADIOS}}}
-    </h4>
-    <br>
+        .methods-pool h4 {
+            color: #667eea;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 18px;
+        }
 
-    <h4>
-        <strong>5. {{ELEMENTSTEST_P3_Q5}}</strong>
-    </h4>
-    <h4>
-        {{{Q5_RADIOS}}}
-    </h4>
-    <br>
+        .lifecycle-diagram {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            min-width: 320px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
 
-    <div style="text-align: center;"><button class="btn btn-success check">{{CHECK}}</button></div>
+        .lifecycle-diagram h4 {
+            color: #764ba2;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        .draggable-method {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 20px;
+            margin: 10px 0;
+            border-radius: 8px;
+            cursor: grab;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            font-size: 16px;
+        }
+
+        .draggable-method:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        .draggable-method:active {
+            cursor: grabbing;
+        }
+
+        .lifecycle-step {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+            gap: 15px;
+        }
+
+        .step-number {
+            background: #667eea;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .drop-zone {
+            flex: 1;
+            min-height: 55px;
+            border: 3px dashed #ccc;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            background: #fafafa;
+            padding: 10px;
+        }
+
+        .drop-zone:hover {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .drop-zone.filled {
+            border-style: solid;
+            border-color: #667eea;
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+        }
+
+        .drop-zone.correct {
+            border-color: #4caf50;
+            background: linear-gradient(135deg, #4caf5020 0%, #81c78420 100%);
+            animation: correctPulse 0.5s ease;
+        }
+
+        .drop-zone.wrong {
+            border-color: #f44336;
+            background: linear-gradient(135deg, #f4433620 0%, #e5393520 100%);
+            animation: wrongShake 0.5s ease;
+        }
+
+        @keyframes correctPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+        }
+
+        @keyframes wrongShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .dropped-method {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 15px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 15px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .arrow-down {
+            text-align: center;
+            color: #667eea;
+            font-size: 24px;
+            margin: 5px 0;
+        }
+
+        .hint-box {
+            background: linear-gradient(135deg, #e3f2fd 0%, #e8eaf6 100%);
+            border-left: 4px solid #2196f3;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 8px;
+        }
+
+        .hint-box h5 {
+            color: #1565c0;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .hint-box ul {
+            margin: 10px 0 0 20px;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        button.check {
+            margin-top: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        button.check:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+
+        .reset-btn {
+            background: linear-gradient(135deg, #ffa726 0%, #fb8c00 100%);
+            margin-left: 15px;
+        }
+    </style>
+
+    <div class="hint-box">
+        <h5>💡 Життєвий цикл Android Activity:</h5>
+        <ul>
+            <li><strong>onCreate()</strong> - викликається при створенні Activity</li>
+            <li><strong>onStart()</strong> - Activity стає видимою</li>
+            <li><strong>onResume()</strong> - Activity готова до взаємодії</li>
+            <li><strong>onPause()</strong> - Activity втрачає фокус</li>
+            <li><strong>onStop()</strong> - Activity стає невидимою</li>
+            <li><strong>onDestroy()</strong> - Activity знищується</li>
+        </ul>
+    </div>
+
+    <div class="lifecycle-container">
+        <div class="methods-pool">
+            <h4>📦 Доступні методи</h4>
+            <div id="methodsPool">
+                <div class="draggable-method" draggable="true" data-method="onCreate">onCreate()</div>
+                <div class="draggable-method" draggable="true" data-method="onStart">onStart()</div>
+                <div class="draggable-method" draggable="true" data-method="onResume">onResume()</div>
+                <div class="draggable-method" draggable="true" data-method="onPause">onPause()</div>
+                <div class="draggable-method" draggable="true" data-method="onStop">onStop()</div>
+                <div class="draggable-method" draggable="true" data-method="onDestroy">onDestroy()</div>
+            </div>
+        </div>
+
+        <div class="lifecycle-diagram">
+            <h4>🔄 Життєвий цикл Activity</h4>
+
+            <div class="lifecycle-step">
+                <div class="step-number">1</div>
+                <div class="drop-zone" data-position="1" data-correct="onCreate"></div>
+            </div>
+
+            <div class="arrow-down">↓</div>
+
+            <div class="lifecycle-step">
+                <div class="step-number">2</div>
+                <div class="drop-zone" data-position="2" data-correct="onStart"></div>
+            </div>
+
+            <div class="arrow-down">↓</div>
+
+            <div class="lifecycle-step">
+                <div class="step-number">3</div>
+                <div class="drop-zone" data-position="3" data-correct="onResume"></div>
+            </div>
+
+            <div class="arrow-down">↓</div>
+
+            <div class="lifecycle-step">
+                <div class="step-number">4</div>
+                <div class="drop-zone" data-position="4" data-correct="onPause"></div>
+            </div>
+
+            <div class="arrow-down">↓</div>
+
+            <div class="lifecycle-step">
+                <div class="step-number">5</div>
+                <div class="drop-zone" data-position="5" data-correct="onStop"></div>
+            </div>
+
+            <div class="arrow-down">↓</div>
+
+            <div class="lifecycle-step">
+                <div class="step-number">6</div>
+                <div class="drop-zone" data-position="6" data-correct="onDestroy"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center">
+        <button class="check">✓ Перевірити порядок</button>
+        <button class="check reset-btn" onclick="resetLifecycle()">🔄 Скинути</button>
+    </div>
+
+    <script>
+        var draggedElement = null;
+
+        // Drag start
+        document.addEventListener('dragstart', function(e) {
+            if (e.target.classList.contains('draggable-method')) {
+                draggedElement = e.target;
+                e.target.style.opacity = '0.5';
+            }
+        });
+
+        // Drag end
+        document.addEventListener('dragend', function(e) {
+            if (e.target.classList.contains('draggable-method')) {
+                e.target.style.opacity = '1';
+            }
+        });
+
+        // Drag over
+        document.addEventListener('dragover', function(e) {
+            if (e.target.classList.contains('drop-zone')) {
+                e.preventDefault();
+            }
+        });
+
+        // Drop
+        document.addEventListener('drop', function(e) {
+            if (e.target.classList.contains('drop-zone') && draggedElement) {
+                e.preventDefault();
+
+                // Якщо зона вже заповнена, повертаємо елемент назад
+                if (e.target.querySelector('.dropped-method')) {
+                    var oldMethod = e.target.querySelector('.dropped-method');
+                    document.getElementById('methodsPool').appendChild(oldMethod);
+                    oldMethod.classList.remove('dropped-method');
+                    oldMethod.classList.add('draggable-method');
+                    oldMethod.setAttribute('draggable', 'true');
+                }
+
+                // Додаємо новий елемент
+                var methodName = draggedElement.getAttribute('data-method');
+                e.target.innerHTML = '<div class="dropped-method" data-method="' + methodName + '">' + methodName + '()</div>';
+                e.target.classList.add('filled');
+                e.target.classList.remove('correct', 'wrong');
+
+                // Видаляємо з пулу
+                draggedElement.remove();
+                draggedElement = null;
+
+                // Додаємо можливість кліку для повернення
+                e.target.querySelector('.dropped-method').addEventListener('click', function() {
+                    returnToPool(this);
+                });
+            }
+        });
+
+        // Повернення методу в пул
+        function returnToPool(element) {
+            var methodName = element.getAttribute('data-method');
+            var dropZone = element.parentElement;
+
+            // Створюємо елемент в пулі
+            var newMethod = document.createElement('div');
+            newMethod.className = 'draggable-method';
+            newMethod.setAttribute('draggable', 'true');
+            newMethod.setAttribute('data-method', methodName);
+            newMethod.textContent = methodName + '()';
+            document.getElementById('methodsPool').appendChild(newMethod);
+
+            // Очищуємо drop zone
+            dropZone.innerHTML = '';
+            dropZone.classList.remove('filled', 'correct', 'wrong');
+        }
+
+        // Скидання всього
+        function resetLifecycle() {
+            // Повертаємо всі методи в пул
+            document.querySelectorAll('.dropped-method').forEach(function(method) {
+                returnToPool(method);
+            });
+
+            // Очищуємо класи
+            document.querySelectorAll('.drop-zone').forEach(function(zone) {
+                zone.classList.remove('correct', 'wrong', 'filled');
+            });
+        }
+    </script>
 </div>
